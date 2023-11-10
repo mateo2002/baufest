@@ -1,0 +1,70 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class DemoBlazeAutomation {
+
+    public static void main(String[] args) throws InterruptedException {
+        // Configuración del sistema para el WebDriver
+        System.setProperty("webdriver.chrome.driver", "ruta/del/chromedriver");
+
+        // Inicialización del WebDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Navegación a la página web
+        driver.get("https://www.demoblaze.com/index.html");
+
+        // Dar de alta un usuario
+        WebElement signUpButton = driver.findElement(By.id("signin2"));
+        signUpButton.click();
+
+        WebElement usernameInput = driver.findElement(By.id("sign-username"));
+        usernameInput.sendKeys("tuUsuario");
+
+        WebElement passwordInput = driver.findElement(By.id("sign-password"));
+        passwordInput.sendKeys("tuContraseña");
+
+        WebElement signUpConfirmButton = driver.findElement(By.xpath("//button[contains(text(),'Sign up')]"));
+        signUpConfirmButton.click();
+
+        // Login con el usuario dado de alta
+        WebElement loginButton = driver.findElement(By.id("login2"));
+        loginButton.click();
+
+        WebElement loginUsernameInput = driver.findElement(By.id("loginusername"));
+        loginUsernameInput.sendKeys("tuUsuario");
+
+        WebElement loginPasswordInput = driver.findElement(By.id("loginpassword"));
+        loginPasswordInput.sendKeys("tuContraseña");
+
+        WebElement loginConfirmButton = driver.findElement(By.xpath("//button[contains(text(),'Log in')]"));
+        loginConfirmButton.click();
+
+        // Agregar una laptop al carrito
+        WebElement laptopLink = driver.findElement(By.xpath("//a[contains(text(),'Laptops')]"));
+        laptopLink.click();
+
+        WebElement addToCartButton = driver.findElement(By.xpath("//a[contains(text(),'Sony vaio i5')]//following::a[1]"));
+        addToCartButton.click();
+
+        // Comprobar que se agregó al carrito
+        Thread.sleep(2000); // Espera para que la animación termine (puede variar según la velocidad de la página)
+        WebElement cartLink = driver.findElement(By.id("cartur"));
+        cartLink.click();
+
+        WebElement cartProduct = driver.findElement(By.xpath("//td[contains(text(),'Sony vaio i5')]"));
+        if (cartProduct.isDisplayed()) {
+            System.out.println("Producto agregado al carrito exitosamente");
+        } else {
+            System.out.println("Error al agregar el producto al carrito");
+        }
+
+        // Logout
+        WebElement logoutButton = driver.findElement(By.xpath("//button[contains(text(),'Log out')]"));
+        logoutButton.click();
+
+        // Cierre del navegador
+        driver.quit();
+    }
+}
